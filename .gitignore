@@ -1,0 +1,14 @@
+build/
+build3/
+models/
+venv/
+*.exe
+*.obj
+*.o
+*.lib
+*.log
+*.ninfer
+*.safetensors
+__pycache__/
+*.pyc
+.cache/
