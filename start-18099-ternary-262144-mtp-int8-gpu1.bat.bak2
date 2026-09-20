@@ -1,0 +1,14 @@
+@echo off
+rem Ternary-Bonsai-2-27B-Abliterated (ninfer sm_86 build) - 262144 ctx + MTP head, GPU1 single card.
+rem KV dtype: rk8v4 is NOT usable on sm_86 (Blackwell-only kind::f8f6f4 kernels).
+rem   bf16 KV -> does not fit (needs 18.68 GB runtime, 16.47 GB available)
+rem   int8 KV -> fits (16.6 GiB device total) and is fastest: 80.1 tok/s decode
+rem LOGGING: every line is shown in this window AND appended to serve-18099.log
+rem          (UTF-8, truncated at each launch so the file always holds the current run).
+rem          Works the same when launched in the background with no console attached.
+cd /d H:\ninfer-ternary
+type nul > "H:\ninfer-ternary\serve-18099.log"
+"build\b1\apps\ninfer-serve.exe" "models\Ternary-Bonsai-2-27B-Abliterated-PQ2_0.ninfer" --host 0.0.0.0 --port 18099 --device 1 --max-context 262144 --kv-capacity 262144 --kv-dtype int8 --max-concurrency 2 --spec mtp --draft-tokens 4 --lm-head-draft --cors --model-id Bonsai2-27B-Abliterated-PQ2 2>&1 | powershell -NoProfile -Command "$input | ForEach-Object { $_; Add-Content -LiteralPath 'H:\ninfer-ternary\serve-18099.log' -Value $_ -Encoding utf8 }"
+echo.
+echo [engine exited] full log in H:\ninfer-ternary\serve-18099.log
+pause

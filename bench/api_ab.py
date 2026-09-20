@@ -5,8 +5,11 @@ P = ("Write a long, detailed technical explanation of how ternary quantization r
 op = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
 
+MODEL_BY_PORT = {18090: "qwen3.8-27b", 18099: "Bonsai2-27B-Abliterated-PQ2"}
+
+
 def call(port, prompt, mx):
-    body = {"model": "qwen3.8-27b", "messages": [{"role": "user", "content": prompt}],
+    body = {"model": MODEL_BY_PORT.get(port, "qwen3.8-27b"), "messages": [{"role": "user", "content": prompt}],
             "max_tokens": mx, "temperature": 0.2, "enable_thinking": False}
     data = json.dumps(body).encode()
     req = urllib.request.Request("http://127.0.0.1:%d/v1/chat/completions" % port, data=data,

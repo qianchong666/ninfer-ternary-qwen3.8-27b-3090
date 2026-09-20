@@ -1,0 +1,12 @@
+@echo off
+rem Ternary-Bonsai-2-27B (ninfer sm_86 build) - 256K (262144) context + MTP head, GPU1 single card.
+rem int8 KV is required at 256K: bf16 KV needs 18.67 GB runtime reservation, only 16.82 GB free on a 3090.
+rem LOGGING: every line is shown in this window AND appended to serve-18099.log
+rem          (UTF-8, truncated at each launch so the file always holds the current run).
+rem          Works the same when launched in the background with no console attached.
+cd /d H:\ninfer-ternary
+type nul > "H:\ninfer-ternary\serve-18099.log"
+"build\b1\apps\ninfer-serve.exe" "models\Ternary-Bonsai-2-27B-Abliterated-PQ2_0.ninfer" --host 0.0.0.0 --port 18099 --device 1 --max-context 262144 --kv-capacity 262144 --kv-dtype int8 --max-concurrency 2 --spec mtp --draft-tokens 4 --lm-head-draft --cors --model-id Bonsai2-27B-Abliterated-PQ2 2>&1 | powershell -NoProfile -Command "$input | ForEach-Object { $_; Add-Content -LiteralPath 'H:\ninfer-ternary\serve-18099.log' -Value $_ -Encoding utf8 }"
+echo.
+echo [engine exited] full log in H:\ninfer-ternary\serve-18099.log
+pause
