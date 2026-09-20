@@ -1,7 +1,7 @@
 import json, time, urllib.request, os
 T = os.environ['LOCALAPPDATA'] + '/Temp'
 opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-prompt = open(T + '/prompt.txt', encoding='utf-8', errors='replace').read()
+prompt = open(T + '/prompt_long.txt', encoding='utf-8', errors='replace').read()
 
 def ask(content, tag):
     body = json.dumps({"model": "qwen3.8-27b",
