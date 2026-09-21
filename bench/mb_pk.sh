@@ -11,5 +11,5 @@ run() {
   ./bench/mb.exe 34816 40 4636 8 2>/dev/null | tr -d '\r' | grep -aE "^v9 "
 }
 echo PK_DONE
-run pk "-DkV9_TILES=6 -DkV9_PACKED=1"
+run pk "-DkV9_TILES=6 -DkV9_PACKED=1 -DkV9_S8HACK=1"
 cd /h/ninfer-ternary && ./bench/mb.exe 34816 40 4636 8 2>/dev/null | tr -d "\r" | grep -aE "^v9"
