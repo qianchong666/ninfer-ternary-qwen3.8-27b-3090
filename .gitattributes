@@ -1,2 +1,18 @@
+# 行尾策略：脚本与源码固定 LF（Linux clone 后 shebang 才不会失效），
+# Windows 批处理固定 CRLF，补丁按二进制存（防 diff 被改写）
+* text=auto
+*.sh   text eol=lf
+*.bash text eol=lf
+*.cu   text eol=lf
+*.cuh  text eol=lf
+*.cpp  text eol=lf
+*.h    text eol=lf
+*.hpp  text eol=lf
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
 *.patch -text
-*.bat text eol=crlf
+*.bundle -text
